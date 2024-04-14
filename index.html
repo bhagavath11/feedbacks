@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+</head>
+<body>
+  
+
+  <script>
+    function logData() {
+      google.script.run.withSuccessHandler(function() {
+        alert('Data logged successfully!');
+      }).extractAndLogData(
+        '<?= Session.getActiveUser().getEmail() ?>', 
+        'Button Click', 
+        '<?= getCurrentEmailSubject() ?>', 
+        '<?= getCurrentEmailBody() ?>'
+      );
+    }
+
+    function getCurrentEmailSubject() {
+      var currentMessage = GmailApp.getMessageById('<?= GmailApp.getCurrentMessageId() ?>');
+      return currentMessage.getSubject();
+    }
+
+    function getCurrentEmailBody() {
+      var currentMessage = GmailApp.getMessageById('<?= GmailApp.getCurrentMessageId() ?>');
+      return currentMessage.getPlainBody();
+    }
+  </script>
+</body>
+</html>
